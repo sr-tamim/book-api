@@ -3,7 +3,20 @@ const loadingMessage = document.getElementById('loadingMessage');
 const resultContainer = document.getElementById('booksContainer');
 
 const loadingData = () => {
+    // clear error message (if any)
+    document.getElementById('errorContainer').classList.add('d-none');
+
+    // get searced text from input field
     const searchedText = document.getElementById('search-input').value;
+
+
+    // show error if input field is empty
+    if (searchedText === '') {
+        document.getElementById('errorContainer').classList.remove('d-none');
+        document.getElementById('errorImg').setAttribute('src', 'img/error(empty-input).svg');
+        document.getElementById('errorMessage').innerText = 'Empty Input.!';
+        return;
+    }
 
     if (searchedText.indexOf(' ') !== -1) {
         searchedText = searchedText.split(' ').join('+');
@@ -16,7 +29,6 @@ const loadingData = () => {
 
     // show loading animation
     loadingMessage.classList.remove('d-none');
-    loadingMessage.classList.add('d-block');
 
     const fetchURL = `https://openlibrary.org/search.json?q=${searchedText}`
     fetch(fetchURL)
@@ -28,7 +40,14 @@ const displayData = data => {
     console.log(data)
     // hide loading animation
     loadingMessage.classList.add('d-none');
-    loadingMessage.classList.remove('d-block');
+
+    // show error if nothing found
+    if (data.docs.length === 0) {
+        document.getElementById('errorContainer').classList.remove('d-none');
+        document.getElementById('errorImg').setAttribute('src', 'img/error(nothing-found).svg');
+        document.getElementById('errorMessage').innerText = 'Nothing Found.!';
+        return;
+    }
 
     // show fetched data
     data.docs.forEach(book => {

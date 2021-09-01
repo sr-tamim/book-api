@@ -23,9 +23,13 @@
                 onclick="loadingData()">
         </div>
 
-        <h2 id="loadingMessage" class="d-none text-center py-5 my-5">
+        <div id="loadingMessage" class="d-none text-center py-5 my-5">
             <img src="img/loading.svg" alt="loading-spinner">
-        </h2>
+        </div>
+        <div id="errorContainer" class="d-none text-center p-5">
+            <img id="errorImg" class="w-100" style="max-width:400px;">
+            <h3 id="errorMessage" class="my-4 text-danger fw-bold"></h3>
+        </div>
         <div id="booksContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 my-5"></div>
 
     </main>
