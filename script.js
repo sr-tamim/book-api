@@ -10,10 +10,14 @@ const loadingData = () => {
     document.getElementById('resultInfo').classList.add('d-none');
     document.getElementById('searchInfo').parentNode.classList.add('d-none');
 
+    // remove previous results
+    while (resultContainer.lastChild) {
+        resultContainer.removeChild(resultContainer.lastChild);
+    }
+
 
     // get searced text from input field
     let searchedText = searchField.value;
-
 
     // show error if input field is empty
     if (searchedText === '') {
@@ -23,17 +27,13 @@ const loadingData = () => {
         return;
     }
 
+    // show loading animation
+    loadingMessage.classList.remove('d-none');
+
+    // modify searched text if there is any space
     if (searchedText.indexOf(' ') !== -1) {
         searchedText = searchedText.split(' ').join('+');
     }
-
-    // remove previous results
-    while (resultContainer.lastChild) {
-        resultContainer.removeChild(resultContainer.lastChild);
-    }
-
-    // show loading animation
-    loadingMessage.classList.remove('d-none');
 
     const fetchURL = `https://openlibrary.org/search.json?q=${searchedText}`
     fetch(fetchURL)
@@ -42,7 +42,6 @@ const loadingData = () => {
 }
 
 const displayData = data => {
-    console.log(data)
     // hide loading animation
     loadingMessage.classList.add('d-none');
 
@@ -54,16 +53,18 @@ const displayData = data => {
         return;
     }
 
+    // show how many results found
     document.getElementById('resultInfo').classList.remove('d-none');
     document.getElementById('resultInfo').innerText = data.numFound + ' books found';
 
+    // show the text which has been searched
     document.getElementById('searchInfo').parentNode.classList.remove('d-none');
     document.getElementById('searchInfo').innerText = searchField.value;
 
     // clear search field
     searchField.value = '';
 
-    // show fetched data
+    // show the results
     data.docs.forEach(book => {
         let bookCover;
         if (book.cover_i) {
