@@ -18,9 +18,10 @@
         <h1 class="text-center text-primary fw-bold">Search Your Favorite Book</h1>
         <div class="row w-100 mx-auto my-5" style="max-width:800px;">
             <input type="text" class="col-12 col-sm-10 border border-primary py-2" placeholder="type book name here"
-                id="search-input" value="hablu">
+                id="search-input">
             <input type="button" value="Search" class="col-12 col-sm-2 border-0 bg-primary text-white fw-bold py-2"
                 onclick="loadingData()">
+            <h5 class="d-none mt-3 text-center" id="resultInfo"></h5>
         </div>
 
         <div id="loadingMessage" class="d-none text-center py-5 my-5">
@@ -30,6 +31,8 @@
             <img id="errorImg" class="w-100" style="max-width:400px;">
             <h3 id="errorMessage" class="my-4 text-danger fw-bold"></h3>
         </div>
+
+        <h3 class="d-none">Showing results for "<span id="searchInfo"></span>"</h3>
         <div id="booksContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 my-5"></div>
 
     </main>
