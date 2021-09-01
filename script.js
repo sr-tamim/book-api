@@ -71,7 +71,7 @@ const displayData = data => {
             bookCover = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="h-100">`;
         }
         const div = document.createElement('div');
-        div.classList.add('col', 'text-center', 'px-3', 'py-4');
+        div.classList.add('col', 'text-center', 'px-3', 'py-5');
         div.innerHTML = `
             <div style="height:400px;background:#f8f8f8" class="d-flex justify-content-center align-items-center fw-bold fs-4 overflow-hidden">
                 ${bookCover ? bookCover : 'Image Not Found'}
