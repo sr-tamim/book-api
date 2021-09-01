@@ -1,0 +1,1 @@
+console.log('connected with js file')
