@@ -4,9 +4,10 @@ const loadingMessage = document.getElementById('loadingMessage');
 const resultContainer = document.getElementById('booksContainer');
 
 const loadingData = () => {
-    // clear error message (if any)
+    // hide error message (if any)
     document.getElementById('errorContainer').classList.add('d-none');
 
+    // hide previous search related info
     document.getElementById('resultInfo').classList.add('d-none');
     document.getElementById('searchInfo').parentNode.classList.add('d-none');
 
@@ -14,7 +15,6 @@ const loadingData = () => {
     while (resultContainer.lastChild) {
         resultContainer.removeChild(resultContainer.lastChild);
     }
-
 
     // get searced text from input field
     let searchedText = searchField.value;
@@ -53,23 +53,21 @@ const displayData = data => {
         return;
     }
 
-    // show how many results found
-    document.getElementById('resultInfo').classList.remove('d-none');
-    document.getElementById('resultInfo').innerText = data.numFound + ' books found';
-
-    // show the text which has been searched
-    document.getElementById('searchInfo').parentNode.classList.remove('d-none');
-    document.getElementById('searchInfo').innerText = searchField.value;
+    // display search related info
+    showInfo(data.numFound);
 
     // clear search field
     searchField.value = '';
 
     // show the results
     data.docs.forEach(book => {
+        // get book cover image url
         let bookCover;
         if (book.cover_i) {
             bookCover = `<img src="https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg" class="h-100">`;
         }
+
+        // create a div for showing each book
         const div = document.createElement('div');
         div.classList.add('col', 'text-center', 'px-3', 'py-5');
         div.innerHTML = `
@@ -85,6 +83,18 @@ const displayData = data => {
 
                 <h6>Published Date: ${book.first_publish_year ? book.first_publish_year : 'Unknown'}</h6>
             </div>`;
+        // append newly created div to the container
         resultContainer.appendChild(div);
     })
+}
+
+
+const showInfo = totalResults => {
+    // show how many results found
+    document.getElementById('resultInfo').classList.remove('d-none');
+    document.getElementById('resultInfo').innerText = totalResults + ' books found';
+
+    // show the text which has been searched
+    document.getElementById('searchInfo').parentNode.classList.remove('d-none');
+    document.getElementById('searchInfo').innerText = searchField.value;
 }
